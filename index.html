@@ -151,4 +151,29 @@ html,body{height:100%;background:#1a1a1a;font-family:Georgia,'Times New Roman',s
 </style>
 </head>
 
+<body>
+<div class="stage">
+    <div class="frame">
+        <div class="label">now playing / A VIDEO</div>
+        <div class="screen" id="screen">
+            <video id="vid" src="video.mp4" playsinlne></video>
+            <div class="menu" id="menu">
+                <div class="title">press start</div>
+                <buttton class="startbtn" id="startbtn">start</buttton>
+                <div class="blink">click to begin</div>
+            </div>
+        </div>
+        <div class="meta">
+            <span>brienn rockhill</span>
+            <span id="res">360p</span>
+        </div>
+        <div class="controls" id="ctr">
+            <button id="pp">pause</button>
+            <div class="bar" id="bar"><i id="fill"></i></div>
+            <div class="time" id="time">0:00 / 0:00</div>
+            <button id="fs">expand</button>
+        </div>
+    </div>
+</div>
+</body>
 </html>
