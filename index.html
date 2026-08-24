@@ -30,7 +30,7 @@ html,body{height:100%;background:#1a1a1a;font-family:Georgia,'Times New Roman',s
     width:100%;
     aspect-ratio:16/9;
     background:#000;
-    border:1px solid 333;
+    border:1px solid #333;
     overflow:hidden;
 }
 .screen video{
@@ -123,12 +123,12 @@ html,body{height:100%;background:#1a1a1a;font-family:Georgia,'Times New Roman',s
 .controls.show{display:flex}
 .controls button{
     background: #2a2a2a;
-    border:1px solid#3d3d3d;
+    border:1px solid #3d3d3d;
     color:#aaa;
     font-size:11px;
     padding:6px 10px;
     cursor:pointer;
-    font-family: iherit;
+    font-family: inherit;
 }
 .controls button:hover{color:#ddd; border-color:#555}
 .bar{
@@ -156,10 +156,10 @@ html,body{height:100%;background:#1a1a1a;font-family:Georgia,'Times New Roman',s
     <div class="frame">
         <div class="label">now playing / A VIDEO</div>
         <div class="screen" id="screen">
-            <video id="vid" src="video.mp4" playsinlne></video>
+            <video id="vid" src="video.mp4" playsinline></video>
             <div class="menu" id="menu">
                 <div class="title">press start</div>
-                <buttton class="startbtn" id="startbtn">start</buttton>
+                <button class="startbtn" id="startbtn">start</button>
                 <div class="blink">click to begin</div>
             </div>
         </div>
@@ -175,5 +175,63 @@ html,body{height:100%;background:#1a1a1a;font-family:Georgia,'Times New Roman',s
         </div>
     </div>
 </div>
+<script>
+const vid=document.getElementById('vid')
+const menu=document.getElementById('menu')
+const screen=document.getElementById('screen')
+const ctr=document.getElementById('ctr')
+const startbtn=document.getElementById('startbtn')
+const pp=document.getElementById('pp')
+const fs=document.getElementById('fs')
+const bar=document.getElementById('bar')
+const fill=document.getElementById('fill')
+const time=document.getElementById('time')
+
+function fmt(s){
+    if(!isFinite(s))return'0:00'
+    const m=Math.floor(s/60)
+    const r=Math.floor(s%60).toString().padStart(2,'0')
+    return m+':'+r
+}
+
+function start(){
+    menu.style.display='none'
+    ctr.classList.add('show')
+    if(screen.requestFullscreen)screen.requestFullscreen()
+    else if(screen.webkitRequestFullscreen)screen.webkitRequestFullscreen()
+    vid.play()
+}
+startbtn.addEventListener('click',start)
+pp.addEventListener('click',function(){
+    if(vid.paused){
+        vid.play()
+        pp.textContent='pause'
+    }else{
+        vid.pause()
+        pp.textContent='play'
+    }
+})
+fs.addEventListener('click',function(){
+    if(document.fullscreenElement)document.exitFullscreen()
+    else if(screen.requestFullscreen)screen.requestFullscreen()
+})
+
+vid.addEventListener('timeupdate',function(){
+    const pct=vid.currentTime/vid.duration*100
+    fill.style.width=pct+'%'
+    time.textContent=fmt(vid.currentTime)+'/'+fmt(vid.duration)
+})
+
+bar.addEventListener('click',function(e){
+    const r=bar.getBoundingClientRect()
+    const p=(e.clientX-r.left)/r.width
+    vid.currentTime=p*vid.duration
+})
+
+vid.addEventListener('ended',function(){
+    pp.textContent='play'
+    if(document.fullscreenElement)document.exitFullscreen()
+})
+</script>
 </body>
 </html>
