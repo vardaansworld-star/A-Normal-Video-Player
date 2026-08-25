@@ -8,7 +8,7 @@ Its just a normal video player which shows a peacefull video
 
 Nothing Fancy just download zip folder and open index.html
 Or
-Use the global Link =>
+Use the global Link => https://vardaansworld-star.github.io/A-Normal-Video-Player/
 
 ## How I Made
 
